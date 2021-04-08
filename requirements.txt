@@ -1,0 +1,11 @@
+# sql
+SQLAlchemy
+
+
+# fastapi
+fastapi
+uvicorn
+
+# graphql
+graphene
+graphene_sqlalchemy
