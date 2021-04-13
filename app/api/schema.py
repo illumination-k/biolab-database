@@ -8,9 +8,17 @@ from ..models import Primer as PrimerModel, User as UserModel
 class User(SQLAlchemyObjectType):
     class Meta:
         model = UserModel
-        interfaces = (relay.Node)
+        interfaces = (relay.Node, )
+
+class UserConnections(relay.Connection):
+    class Meta:
+        node = User
 
 class Primer(SQLAlchemyObjectType):
     class Meta:
         model = PrimerModel
         interfaces = (relay.Node, )
+
+class PrimerConnections(relay.Connection):
+    class Meta:
+        node = Primer
