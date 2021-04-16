@@ -1,8 +1,11 @@
 # bio
 pydna
+dna_features_viewer
 
 # sql
 SQLAlchemy
+alembic
+psycopg2-binary
 
 # fastapi
 fastapi

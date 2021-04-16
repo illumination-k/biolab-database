@@ -11,3 +11,5 @@ COPY ./requirements.txt /tmp
 RUN pip install -r /tmp/requirements.txt && rm -rf /tmp/*
 
 WORKDIR /app
+
+CMD [ "zsh" ]
