@@ -21,6 +21,7 @@ class User(Base):
     __tablename__ = "user"
     id = Column(Integer, primary_key=True)
     name = Column(String)
+    password = Column(String)
     permission_level = Column(Integer, default=1)
     registered = Column(DateTime, default=func.now())
     updated = Column(DateTime, default=func.now())
@@ -37,6 +38,7 @@ class Primer(Base):
     registered = Column(DateTime, default=func.now())
     updated = Column(DateTime, default=func.now())
     user = relationship(User, backref=backref('primer', uselist=True, cascade='delete,all'))
+
 
 class Plasmid(Base):
     __tablename__ = "plasmid"
