@@ -1,0 +1,21 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pytest = "*"
+
+[packages]
+fastapi = "*"
+uvicorn = "*"
+sqlalchemy = "*"
+bcrypt = "*"
+pyjwt = "*"
+graphene = "*"
+graphene-sqlalchemy = "*"
+psycopg2-binary = "*"
+alembic = "*"
+
+[requires]
+python_version = "3.8"

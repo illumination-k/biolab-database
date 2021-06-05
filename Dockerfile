@@ -5,10 +5,11 @@ ENV LC_ALL C.UTF-8
 
 RUN apt update -y --fix-missing && \
     apt install -y git gcc zsh curl peco && \
-    curl -L https://raw.githubusercontent.com/illumination-k/dotfiles/master/etc/install.sh | bash
+    curl -L https://raw.githubusercontent.com/illumination-k/dotfiles/master/etc/install.sh | bash && \
+    pip install pipenv
 
-COPY ./requirements.txt /tmp
-RUN pip install -r /tmp/requirements.txt && rm -rf /tmp/*
+COPY ./Pipfile .
+RUN pipenv install
 
 WORKDIR /app
 
