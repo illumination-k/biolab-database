@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 db = db_session.session_factory()
 
 
-class CreateNewPrimer(graphene.Mutation):
+class CreatePrimer(graphene.Mutation):
     class Arguments:
         token = graphene.String(required=True)
         name = graphene.String()
@@ -33,4 +33,4 @@ class CreateNewPrimer(graphene.Mutation):
         primer = crud.create_primer(db=db, user=user, name=name, seq=seq)
 
         token = create_access_token_with_username(user.username)
-        return CreateNewPrimer(token=token)
+        return CreatePrimer(token=token)

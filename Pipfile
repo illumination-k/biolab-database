@@ -16,6 +16,8 @@ graphene = "*"
 graphene-sqlalchemy = "*"
 psycopg2-binary = "*"
 alembic = "*"
+pydna = "*"
+dna_features_viewer = "*"
 
 [requires]
 python_version = "3.8"
