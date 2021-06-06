@@ -8,9 +8,11 @@ RUN apt update -y --fix-missing && \
     curl -L https://raw.githubusercontent.com/illumination-k/dotfiles/master/etc/install.sh | bash && \
     pip install pipenv
 
-COPY ./Pipfile .
-RUN pipenv install
+COPY Pipfile /tmp
+COPY Pipfile.lock /tmp
+WORKDIR /tmp
+RUN pipenv install --system && rm -rf /tmp/*
 
-WORKDIR /app
+WORKDIR /backend
 
 CMD [ "zsh" ]

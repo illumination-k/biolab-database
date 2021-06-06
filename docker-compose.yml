@@ -6,19 +6,24 @@ services:
     container_name: "api"
     command: "uvicorn main:backend --reload --host 0.0.0.0 --port 8000"
     volumes:
-        - ./backend:/backend:Z
-    build: .
+      - ./backend:/backend:Z
+    image: illumination27/biolab-database:latest
     restart: always
     tty: true
     ports:
-      - 8000:8000
-    
+      - 8001:8000
+
   db:
     image: postgres:11.7
     container_name: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
     ports:
       - 5432:5432
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=main
+
+volumes:
+  postgres_data: {}

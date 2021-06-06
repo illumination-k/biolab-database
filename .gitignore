@@ -1,5 +1,6 @@
 __pycache__/
 .vscode/
 .devcontainer/
-versions/
+backend/postgres/versions/*
 .env
+db/
