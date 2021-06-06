@@ -18,10 +18,10 @@ class CreateUser(UserBase):
         self.password = password
 
 
-# class User(SQLAlchemyObjectType):
-#     class Meta:
-#         model = UserModel
-#         interfaces = (relay.Node,)
+class User(SQLAlchemyObjectType):
+    class Meta:
+        model = UserModel
+        interfaces = (relay.Node,)
 
 
 # class UserConnections(relay.Connection):

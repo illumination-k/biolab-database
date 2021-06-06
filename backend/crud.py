@@ -13,7 +13,7 @@ def get_user_by_username(db: Session, username: str) -> Optional[models.User]:
     return db.query(models.User).filter(models.User.username == username).first()
 
 
-def create_user(db: Session, user: schema.CreateUser) -> models.User:
+def create_user(db: Session, user: schema.CreateUser) -> Optional[models.User]:
     hashed_password = bcrypt.hashpw(user.password.encode(ENCODE), bcrypt.gensalt())
 
     # decode needs
@@ -33,3 +33,24 @@ def create_user(db: Session, user: schema.CreateUser) -> models.User:
 def check_password(db: Session, username: str, password: str) -> bool:
     db_user = get_user_by_username(db, username)
     return bcrypt.checkpw(password.encode(ENCODE), db_user.password.encode(ENCODE))
+
+
+def create_primer(
+    db: Session,
+    user: models.User,
+    name: str,
+    seq: str,
+    desc: Optional[str] = None,
+    stock_place: Optional[str] = None,
+) -> Optional[models.Primer]:
+    primer: models.Primer = models.Primer(
+        name=name, seq=seq, desc=desc, user_id=user.id
+    )
+
+    try:
+        db.add(primer)
+        db.commit()
+        db.refresh(primer)
+        return primer
+    except:
+        db.rollback()

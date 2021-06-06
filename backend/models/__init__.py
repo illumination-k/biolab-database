@@ -1,4 +1,4 @@
-from sqlalchemy import Column, create_engine
+from sqlalchemy import Column, create_engine, ForeignKey
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship, backref
 
 from sqlalchemy.ext.declarative import declarative_base
@@ -27,6 +27,10 @@ class User(Base):
     updated = Column(DateTime, default=func.now())
     active = Column(Boolean)
 
+    # child relations
+    primer = relationship("Primer")
+    plasmid = relationship("Plasmid")
+
 
 class Primer(Base):
     __tablename__ = "primer"
@@ -38,6 +42,8 @@ class Primer(Base):
     tm = Column(Float)
     registered = Column(DateTime, default=func.now())
     updated = Column(DateTime, default=func.now())
+
+    user_id = Column(Integer, ForeignKey("user.id"))
     # user = relationship(
     #     User, backref=backref("primer", uselist=True, cascade="delete,all")
     # )
@@ -52,6 +58,8 @@ class Plasmid(Base):
     stock_place = Column(String)
     registered = Column(DateTime, default=func.now())
     updated = Column(DateTime, default=func.now())
+
+    user_id = Column(Integer, ForeignKey("user.id"))
     # user = relationship(
     #     User, backref=backref("plasmid", uselist=True, cascade="delete,all")
     # )

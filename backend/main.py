@@ -40,6 +40,7 @@ class Query(graphene.ObjectType):
 class Mutations(graphene.ObjectType):
     createUser = mutation.CreateUser.Field()
     auth = mutation.AuthenUser.Field()
+    createPrimer = mutation.CreateNewPrimer.Field()
 
 
 backend.add_route(
