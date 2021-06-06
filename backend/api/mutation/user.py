@@ -1,4 +1,3 @@
-import bcrypt
 import graphene
 import crud
 from api import schema
@@ -60,25 +59,3 @@ class AuthenUser(graphene.Mutation):
         access_token = create_access_token_with_username(username)
 
         return AuthenUser(token=access_token)
-
-
-class CreateNewPrimer(graphene.Mutation):
-    class Arguments:
-        token = graphene.String(required=True)
-        name = graphene.String()
-        desc = graphene.String()
-        seq = graphene.String()
-
-    token = graphene.String()
-
-    @staticmethod
-    def mutate(root, info, token: str, name: str, seq: str, desc: Optional[str] = None):
-        user = check_access_token(token)
-
-        if user is None:
-            raise GraphQLError("Invalid credentials")
-
-        primer = crud.create_primer(db=db, user=user, name=name, seq=seq)
-
-        token = create_access_token_with_username(user.username)
-        return CreateNewPrimer(token=token)
