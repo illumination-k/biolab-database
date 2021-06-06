@@ -35,6 +35,10 @@ def check_password(db: Session, username: str, password: str) -> bool:
     return bcrypt.checkpw(password.encode(ENCODE), db_user.password.encode(ENCODE))
 
 
+def get_primer_by_seq(db: Session, seq: str) -> Optional[models.Primer]:
+    return db.query(models.Primer).filter(models.Primer.seq == seq).first()
+
+
 def create_primer(
     db: Session,
     user: models.User,

@@ -2,7 +2,7 @@ import graphene
 from fastapi import FastAPI
 from starlette.graphql import GraphQLApp
 
-from api import mutation
+from api import mutation, schema
 
 ### Set Log Level ###
 import os
@@ -28,15 +28,6 @@ logger = logging.getLogger(__name__)
 backend = FastAPI()
 
 
-class Query(graphene.ObjectType):
-    # 引数nameを持つフィールドhelloを作成
-    hello = graphene.String(name=graphene.String(default_value="stranger"))
-
-    # フィールドhelloに対するユーザへ返すクエリレスポンスを定義
-    def resolve_hello(self, info, name: str):
-        return "Hello " + name
-
-
 class Mutations(graphene.ObjectType):
     createUser = mutation.CreateUser.Field()
     auth = mutation.AuthenUser.Field()
@@ -44,7 +35,8 @@ class Mutations(graphene.ObjectType):
 
 
 backend.add_route(
-    "/graphql", GraphQLApp(schema=graphene.Schema(query=Query, mutation=Mutations))
+    "/graphql",
+    GraphQLApp(schema=graphene.Schema(query=schema.Query, mutation=Mutations)),
 )
 
 
