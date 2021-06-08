@@ -53,7 +53,7 @@ class AuthenUser(graphene.Mutation):
             db=db, username=username, password=password
         )
 
-        if not is_password_correct:
+        if is_password_correct is None:
             raise GraphQLError("Password is not correct")
 
         access_token = create_access_token_with_username(username)

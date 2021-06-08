@@ -55,9 +55,9 @@ def check_access_token(token: str) -> Optional[User]:
 
         username = payload.get("sub")
         if username is None:
-            return False
+            return None
     except jwt.PyJWTError:
-        return False
+        return None
 
     user = crud.get_user_by_username(db=db, username=username)
     return user

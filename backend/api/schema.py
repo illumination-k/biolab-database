@@ -53,7 +53,7 @@ class Query(graphene.ObjectType):
     allPrimers = graphene.List(Primer, token=graphene.String())
 
     def resolve_allUsers(self, info, token: str):
-        if not check_access_token(token=token):
+        if check_access_token(token=token) is None:
             raise GraphQLError("Invalid credentials")
 
         # SQLarchemyのクエリオブジェクトが帰ってくるので、フィルタとかはそこからやればいい
@@ -61,7 +61,7 @@ class Query(graphene.ObjectType):
         return query.all()
 
     def resolve_allPrimers(self, info, token: str):
-        if not check_access_token(token=token):
+        if check_access_token(token=token) is None:
             raise GraphQLError("Invalid credentials")
 
         query = Primer.get_query(info)
