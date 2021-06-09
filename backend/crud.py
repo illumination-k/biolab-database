@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from api import schema
 import models
 import bcrypt
-
+from graphql import GraphQLError
 from typing import Optional
 
 
@@ -10,6 +10,11 @@ ENCODE = "utf-8"
 
 
 def get_user_by_username(db: Session, username: str) -> Optional[models.User]:
+    try:
+        user = db.query(models.User).filter(models.User.username == username).first()
+    except:
+        db.rollback()
+        raise GraphQLError("get user by username is failed")
     return db.query(models.User).filter(models.User.username == username).first()
 
 

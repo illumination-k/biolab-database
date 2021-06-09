@@ -41,12 +41,14 @@ class AuthenUser(graphene.Mutation):
         password = graphene.String(required=True)
 
     token = graphene.String()
+    username = graphene.String()
 
     @staticmethod
     def mutate(root, info, username: str, password: str):
+        logger.debug(f"username: {username}, password: {password}")
         # get user info
-        db_user = crud.get_user_by_username(db, username)
-        if db_user is None:
+        user = crud.get_user_by_username(db, username)
+        if user is None:
             raise GraphQLError("Username not existed")
         # check password
         is_password_correct = crud.check_password(
@@ -58,4 +60,4 @@ class AuthenUser(graphene.Mutation):
 
         access_token = create_access_token_with_username(username)
 
-        return AuthenUser(token=access_token)
+        return AuthenUser(token=access_token, username=user.username)

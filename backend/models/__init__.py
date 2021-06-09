@@ -21,6 +21,7 @@ class User(Base):
     __tablename__ = "user"
     id = Column(Integer, primary_key=True)
     username = Column(String)
+    email = Column(String)
     password = Column(TEXT)
     permission_level = Column(Integer, default=1)
     registered = Column(DateTime, default=func.now())
@@ -44,9 +45,6 @@ class Primer(Base):
     updated = Column(DateTime, default=func.now())
 
     user_id = Column(Integer, ForeignKey("user.id"))
-    # user = relationship(
-    #     User, backref=backref("primer", uselist=True, cascade="delete,all")
-    # )
 
 
 class Plasmid(Base):
@@ -60,6 +58,3 @@ class Plasmid(Base):
     updated = Column(DateTime, default=func.now())
 
     user_id = Column(Integer, ForeignKey("user.id"))
-    # user = relationship(
-    #     User, backref=backref("plasmid", uselist=True, cascade="delete,all")
-    # )

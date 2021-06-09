@@ -7,16 +7,12 @@ import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import theme from "@libs/theme";
 
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import client from "@libs/initApollo";
+
+import { ApolloProvider } from "@apollo/client";
 
 const materialUiCache = createCache({ key: "css", prepend: true });
 materialUiCache.compat = true;
-
-const cache = new InMemoryCache();
-const client = new ApolloClient({
-  uri: `${process.env.NEXT_PUBLIC_BACKEND_URL}/graphql`,
-  cache,
-});
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
