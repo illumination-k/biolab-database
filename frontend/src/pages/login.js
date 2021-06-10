@@ -2,7 +2,7 @@ import Head from 'next/head'
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import { signIn, useSession } from 'next-auth/client'
+import { signIn } from 'next-auth/client'
 
 export default function Login () {
   const [email, setEmail] = useState('')
@@ -25,7 +25,7 @@ export default function Login () {
       {
         email,
         password,
-        callbackUrl: `${window.location.origin}/`
+        callbackUrl: `${window.location.origin}/${email.split("@")[0]}`
       }
     )
   }
