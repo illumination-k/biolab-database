@@ -3,7 +3,15 @@ from sqlalchemy.orm import scoped_session, sessionmaker, relationship, backref
 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql.functions import func
-from sqlalchemy.sql.sqltypes import DateTime, Float, Integer, String, TEXT, Boolean
+from sqlalchemy.sql.sqltypes import (
+    DateTime,
+    Float,
+    Integer,
+    String,
+    TEXT,
+    Boolean,
+    BLOB,
+)
 
 Engine = create_engine(
     "postgresql://postgres:postgres@postgres:5432/main", encoding="utf-8", echo=False
@@ -23,6 +31,7 @@ class User(Base):
     username = Column(String)
     email = Column(String)
     password = Column(TEXT)
+    picture = Column(BLOB)
     permission_level = Column(Integer, default=1)
     registered = Column(DateTime, default=func.now())
     updated = Column(DateTime, default=func.now())
