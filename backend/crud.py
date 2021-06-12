@@ -36,7 +36,7 @@ def get_user(db: Session, key: KEY_LITERAL, query: str) -> Optional[models.User]
     return user
 
 
-def create_user(db: Session, user: models.user) -> Optional[models.User]:
+def create_user(db: Session, user: models.User) -> Optional[models.User]:
     try:
         db.add(user)
         db.commit()

@@ -10,7 +10,7 @@ from sqlalchemy.sql.sqltypes import (
     String,
     TEXT,
     Boolean,
-    BLOB,
+    LargeBinary,
 )
 
 Engine = create_engine(
@@ -20,8 +20,10 @@ Engine = create_engine(
 db_session = scoped_session(
     sessionmaker(autocommit=False, autoflush=False, bind=Engine)
 )
+
 Base = declarative_base()
-# クエリを扱うために宣言
+
+# declare for query
 Base.query = db_session.query_property()
 
 
@@ -31,13 +33,24 @@ class User(Base):
     username = Column(String)
     email = Column(String)
     password = Column(TEXT)
-    picture = Column(BLOB)
+    picture = Column(LargeBinary)
+    birthday = Column(DateTime)
     permission_level = Column(Integer, default=1)
     registered = Column(DateTime, default=func.now())
     updated = Column(DateTime, default=func.now())
     active = Column(Boolean)
 
     # child relations
+    primer = relationship("Primer")
+    plasmid = relationship("Plasmid")
+
+
+class Tag(Base):
+    __tablename__ = "tag"
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    desc = Column(TEXT)
+
     primer = relationship("Primer")
     plasmid = relationship("Plasmid")
 
@@ -54,6 +67,7 @@ class Primer(Base):
     updated = Column(DateTime, default=func.now())
 
     user_id = Column(Integer, ForeignKey("user.id"))
+    tag_id = Column(Integer, ForeignKey("tag.id"))
 
 
 class Plasmid(Base):
@@ -61,9 +75,10 @@ class Plasmid(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     desc = Column(TEXT)
-    seq = Column(TEXT)
+    gbk = Column(TEXT)
     stock_place = Column(String)
     registered = Column(DateTime, default=func.now())
     updated = Column(DateTime, default=func.now())
 
     user_id = Column(Integer, ForeignKey("user.id"))
+    tag_id = Column(Integer, ForeignKey("tag.id"))
