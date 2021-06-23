@@ -41,6 +41,11 @@ const SignUpPage = () => {
       type: "password",
     },
     {
+      name: "repassword",
+      label: "Re-type Password",
+      type: "password"
+    },
+    {
       name: "firstName",
       label: "First Name",
       type: "text",
